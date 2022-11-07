@@ -37,8 +37,11 @@ function App() {
 
   return (
     <div className="App">
+      <h4 className="flex justify-center items-center pt-2">
+        Owner's list of BAYC NFT
+      </h4>
       {resultOfBayc.length > 0 && (
-        <div className="flex justify-center items-center p-10">
+        <div className="flex justify-center items-center px-10">
           <div className="mt-8 flex flex-col">
             <div className="-my-2 -mx-4 sm:-mx-6 lg:-mx-8">
               <div className="inline-block mix-w-fit py-2 align-middle md:px-6 lg:px-8">
@@ -48,7 +51,7 @@ function App() {
                       <tr>
                         <th
                           scope="col"
-                          className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                          className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
                         >
                           Wallet Address
                         </th>

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./App.css";
 import GetTotalNft from "./getTotalNft";
 import useNfWallet from "./useNftWalletAddress";
@@ -6,6 +7,10 @@ import usePagination from "./usePagination";
 function App() {
   const { data, error, loading } = useNfWallet();
   const { next, page, previous } = usePagination(data.length);
+  const [value, setValue] = useState(15);
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
   if (loading) {
     return <p>Loading</p>;
   }
@@ -41,13 +46,13 @@ function App() {
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
                     {data
-                      .slice(page * 15 - 15, page * 15)
+                      .slice(page * value - value, page * value)
                       .map((address, index) => (
                         <tr key={address}>
-                          <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                          <td className="whitespace-nowrap text-center py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                             {address}
                           </td>
-                          <td>
+                          <td className="whitespace-nowrap text-center py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                             <GetTotalNft address={address} />
                           </td>
                         </tr>
@@ -55,21 +60,33 @@ function App() {
                   </tbody>
                 </table>
               </div>
+            </div>
+            <div className=" mix-w-fit pb-2 align-middle md:px-6 lg:px-8">
+              <div className="flex gap-4 justify-between items-center">
+                <p className="p-0 text-xs">Page {page}</p>
+                <p className="p-0 text-xs">
+                  Total Page {Math.ceil(data.length / value)}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center mix-w-fit pb-16 align-middle md:px-6 lg:px-8">
+              <div>
+                <label htmlFor="selectPage">Showing result</label>
+                <select
+                  id="selectPage"
+                  value={value}
+                  onChange={handleChange}
+                  className="bg-[#fff] h-10"
+                >
+                  <option value="15">15</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+              </div>
               <div className="flex gap-4 justify-center items-center">
-                <button
-                  onClick={previous}
-                  className="bg-slate-900 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 text-white font-semibold h-12 px-6 rounded-lg w-full flex items-center justify-center sm:w-auto dark:bg-sky-500 dark:highlight-white/20 dark:hover:bg-sky-400"
-                >
-                  Previous
-                </button>
-                <p>Page Number : {page}</p>
-                <p>Total Page : {Math.ceil(data.length / 15)}</p>
-                <button
-                  onClick={next}
-                  className="bg-slate-900 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 text-white font-semibold h-12 px-6 rounded-lg w-full flex items-center justify-center sm:w-auto dark:bg-sky-500 dark:highlight-white/20 dark:hover:bg-sky-400"
-                >
-                  Next
-                </button>
+                <button onClick={previous}>Previous</button>
+                <button onClick={next}>Next</button>
               </div>
             </div>
           </div>

@@ -4,6 +4,7 @@ import { addressOfBAYC, alchemy } from "./alchemy";
 const GetTotalNft = ({ address }) => {
   const [loading, setLoading] = useState(true);
   const [nftDetails, setNftDetails] = useState();
+
   const getTotalNft = async () => {
     try {
       const nfts = await alchemy.nft.getNftsForOwner(
@@ -23,6 +24,7 @@ const GetTotalNft = ({ address }) => {
   useEffect(() => {
     getTotalNft();
   }, []);
+
   return (
     <div>
       <p>

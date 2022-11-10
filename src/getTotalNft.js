@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { addressOfBAYC, alchemy } from "./alchemy";
+import useNfWallet from "./useNftWalletAddress";
 
-const GetTotalNft = ({ address }) => {
+const GetTotalNft = ({ address, nftDetails, setNftDetails }) => {
   const [loading, setLoading] = useState(true);
-  const [nftDetails, setNftDetails] = useState();
+
+  // const [data, setData] = useState([]);
 
   const getTotalNft = async () => {
     try {
@@ -16,6 +18,7 @@ const GetTotalNft = ({ address }) => {
       );
       setNftDetails(nfts);
       setLoading(false);
+      // setData((prevData) => [...prevData, address]);
     } catch (error) {
       setLoading(false);
       console.log(error);
@@ -24,6 +27,12 @@ const GetTotalNft = ({ address }) => {
   useEffect(() => {
     getTotalNft();
   }, []);
+
+  // useEffect(() => {
+  //   localStorage.setItem("data", JSON.stringify(data));
+  // }, [data]);
+
+  // console.log(data);
 
   return (
     <div>

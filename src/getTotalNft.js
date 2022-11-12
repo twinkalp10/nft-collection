@@ -5,8 +5,6 @@ import useNfWallet from "./useNftWalletAddress";
 const GetTotalNft = ({ address, nftDetails, setNftDetails }) => {
   const [loading, setLoading] = useState(true);
 
-  // const [data, setData] = useState([]);
-
   const getTotalNft = async () => {
     try {
       const nfts = await alchemy.nft.getNftsForOwner(
@@ -18,7 +16,6 @@ const GetTotalNft = ({ address, nftDetails, setNftDetails }) => {
       );
       setNftDetails(nfts);
       setLoading(false);
-      // setData((prevData) => [...prevData, address]);
     } catch (error) {
       setLoading(false);
       console.log(error);
@@ -31,8 +28,6 @@ const GetTotalNft = ({ address, nftDetails, setNftDetails }) => {
   // useEffect(() => {
   //   localStorage.setItem("data", JSON.stringify(data));
   // }, [data]);
-
-  // console.log(data);
 
   return (
     <div>

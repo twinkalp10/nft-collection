@@ -36,7 +36,27 @@ const GetNFTmetadata = ({ tokenId, address }) => {
 
   console.log(data);
 
-  return <div>{data?.ownership.created_date}</div>;
+  return (
+    <div>
+      <div>
+        <img
+          src={data?.image_thumbnail_url}
+          alt="nft face"
+          width="45px"
+          height="45px"
+        />
+      </div>
+      <div>{data?.ownership.created_date}</div>
+      <a
+        href={data?.permalink}
+        target="_blank"
+        className="font-bold hover:text-cyan-600"
+        rel="noreferrer"
+      >
+        check NFT here
+      </a>
+    </div>
+  );
 };
 
 export default GetNFTmetadata;

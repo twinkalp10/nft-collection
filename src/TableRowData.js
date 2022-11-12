@@ -30,18 +30,8 @@ const TableRowData = ({ address }) => {
         <tr>
           {nftDetails?.ownedNfts.map((n) => (
             <div className="whitespace-nowrap text-left py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-              <div className="flex items-center gap-2 ">
-                <div>
-                  <img
-                    src={n.media[0].thumbnail}
-                    alt="nft face"
-                    width="45px"
-                    height="45px"
-                  />
-                </div>
-                <div>Token ID: {n.tokenId}</div>
-                <GetNFTmetadata tokenId={n.tokenId} address={address} />
-              </div>
+              <div>Token ID: {n.tokenId}</div>
+              <GetNFTmetadata tokenId={n.tokenId} address={address} />
             </div>
           ))}
         </tr>

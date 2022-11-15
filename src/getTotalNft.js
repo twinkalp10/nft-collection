@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { addressOfBAYC, alchemy } from "./alchemy";
-import useNfWallet from "./useNftWalletAddress";
+import Axios from "axios";
 
 const GetTotalNft = ({ address, nftDetails, setNftDetails }) => {
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    Axios.get("http://localhost:3001/read-address").then((response) => {
+      console.log(response);
+    });
+  }, []);
 
   const getTotalNft = async () => {
     try {
@@ -15,6 +21,7 @@ const GetTotalNft = ({ address, nftDetails, setNftDetails }) => {
         { withMetadata: true }
       );
       setNftDetails(nfts);
+
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -25,9 +32,10 @@ const GetTotalNft = ({ address, nftDetails, setNftDetails }) => {
     getTotalNft();
   }, []);
 
-  // useEffect(() => {
-  //   localStorage.setItem("data", JSON.stringify(data));
-  // }, [data]);
+  Axios.post("http://localhost:3001/insert-address", {
+    Address: address,
+    Count: nftDetails?.totalCount,
+  });
 
   return (
     <div>

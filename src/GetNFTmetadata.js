@@ -1,17 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { addressOfBAYC } from "./alchemy";
+import * as dayjs from "dayjs";
 
 const GetNFTmetadata = ({ tokenId, address }) => {
   const [data, setData] = useState();
-  // const res = axios.get(
-  //   `https://api.opensea.io/api/v1/asset/${addressOfBAYC}/${tokenId}/`,
-  //   {
-  //     params: { account_address: `${address}`, include_orders: "false" },
-  //   }
-  // );
-
-  // console.log(res.then((res) => res.json()));
+  const [loading, setLoading] = useState(true);
 
   const options = {
     method: "GET",
@@ -27,10 +21,11 @@ const GetNFTmetadata = ({ tokenId, address }) => {
       .request(options)
       .then(function (response) {
         setData(response.data);
-        // console.log(response.data);
+        setLoading(false);
       })
       .catch(function (error) {
         console.error(error);
+        setLoading(false);
       });
   }, []);
 
@@ -38,23 +33,33 @@ const GetNFTmetadata = ({ tokenId, address }) => {
 
   return (
     <div>
-      <div>
-        <img
-          src={data?.image_thumbnail_url}
-          alt="nft face"
-          width="45px"
-          height="45px"
-        />
-      </div>
-      <div>{data?.ownership.created_date}</div>
-      <a
-        href={data?.permalink}
-        target="_blank"
-        className="font-bold hover:text-cyan-600"
-        rel="noreferrer"
-      >
-        check NFT here
-      </a>
+      {loading ? (
+        <div>loading</div>
+      ) : (
+        <div className="flex justify-between items-center gap-3">
+          <div>
+            <img
+              src={data?.image_thumbnail_url}
+              alt="nft face"
+              width="45px"
+              height="45px"
+            />
+          </div>
+          <div className="flex flex-col">
+            <p className="p-0">
+              Date: {dayjs(data?.ownership.created_date).format("DD/MM/YYYY")}
+            </p>
+            <a
+              href={data?.permalink}
+              target="_blank"
+              className="font-bold hover:text-cyan-600"
+              rel="noreferrer"
+            >
+              check NFT here
+            </a>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

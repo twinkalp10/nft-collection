@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 const usePagination = (maxSize = 0) => {
   const [page, setPage] = useState(1);
+
   const next = () => {
     if (maxSize / 15 > page) {
       setPage(page + 1);

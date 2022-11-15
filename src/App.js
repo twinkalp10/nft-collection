@@ -1,13 +1,12 @@
 import { useState } from "react";
 import "./App.css";
-import GetTotalNft from "./getTotalNft";
 import TableRowData from "./TableRowData";
 import useNfWallet from "./useNftWalletAddress";
 import usePagination from "./usePagination";
 
 function App() {
   const { data, error, loading } = useNfWallet();
-  const { next, page, previous } = usePagination(data.length);
+  const { next, page, previous, index } = usePagination(data.length);
   const [value, setValue] = useState(15);
 
   const handleChange = (e) => {
@@ -36,6 +35,12 @@ function App() {
                         scope="col"
                         className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
                       >
+                        Index
+                      </th>
+                      <th
+                        scope="col"
+                        className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
+                      >
                         Wallet Address
                       </th>
                       <th
@@ -49,8 +54,12 @@ function App() {
                   <tbody className="divide-y divide-gray-200 bg-white">
                     {data
                       .slice(page * value - value, page * value)
-                      .map((address, index) => (
-                        <TableRowData address={address} index={index} />
+                      .map((wallet, index) => (
+                        <TableRowData
+                          address={wallet.address}
+                          count={wallet.count}
+                          index={index + page * value - value}
+                        />
                       ))}
                   </tbody>
                 </table>

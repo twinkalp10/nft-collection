@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import GetNFTsId from "./GetNFTsId";
-const TableRowData = ({ address, count, index }) => {
+const TableRowData = ({ address, count, index, key }) => {
   const [open, setOpen] = React.useState(false);
 
   return (
     <>
       <tr
-        key={address}
         onClick={() => {
           setOpen(!open);
         }}
@@ -23,7 +22,7 @@ const TableRowData = ({ address, count, index }) => {
         </td>
       </tr>
       {open && (
-        <tr>
+        <tr key={key}>
           <GetNFTsId address={address} />
         </tr>
       )}

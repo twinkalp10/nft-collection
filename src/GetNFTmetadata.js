@@ -29,8 +29,6 @@ const GetNFTmetadata = ({ tokenId, address }) => {
       });
   }, []);
 
-  console.log(data);
-
   return (
     <div>
       {loading ? (

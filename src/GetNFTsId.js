@@ -24,7 +24,6 @@ const GetNFTsId = ({ address }) => {
     getTotalNft();
   }, []);
 
-  console.log(data?.ownedNfts);
   return (
     <td colSpan={3}>
       {data?.ownedNfts.map((id) => {

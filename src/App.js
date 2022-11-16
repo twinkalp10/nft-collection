@@ -6,7 +6,7 @@ import usePagination from "./usePagination";
 
 function App() {
   const { data, error, loading } = useNfWallet();
-  const { next, page, previous, index } = usePagination(data.length);
+  const { next, page, previous } = usePagination(data.length);
   const [value, setValue] = useState(15);
 
   const handleChange = (e) => {
@@ -58,6 +58,7 @@ function App() {
                         <TableRowData
                           address={wallet.address}
                           count={wallet.count}
+                          key={wallet.address}
                           index={index + page * value - value}
                         />
                       ))}
@@ -86,6 +87,7 @@ function App() {
                   <option value="15">15</option>
                   <option value="50">50</option>
                   <option value="100">100</option>
+                  <option value="500">500</option>
                 </select>
               </div>
               <div className="flex gap-4 justify-center items-center">

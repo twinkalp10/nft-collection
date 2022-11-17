@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import GetNFTsId from "./GetNFTsId";
 const TableRowData = ({ address, count, index, key, ContractAddressOfNft }) => {
   const [open, setOpen] = React.useState(false);

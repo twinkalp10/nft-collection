@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { addressOfBAYC, alchemy } from "./alchemy";
 import GetNFTmetadata from "./GetNFTmetadata";
 
-const GetNFTsId = ({ address }) => {
+const GetNFTsId = ({ address, ContractAddressOfNft }) => {
   const [data, setData] = useState();
 
   const getTotalNft = async () => {
@@ -10,10 +10,11 @@ const GetNFTsId = ({ address }) => {
       const nfts = await alchemy.nft.getNftsForOwner(
         address,
         {
-          contractAddresses: [addressOfBAYC],
+          contractAddresses: [ContractAddressOfNft],
         },
         { withMetadata: true }
       );
+      localStorage.setItem("nft data", JSON.stringify(data));
       setData(nfts);
     } catch (error) {
       console.log(error);
@@ -22,7 +23,7 @@ const GetNFTsId = ({ address }) => {
 
   React.useEffect(() => {
     getTotalNft();
-  }, []);
+  }, [ContractAddressOfNft]);
 
   return (
     <td colSpan={3}>
@@ -30,25 +31,38 @@ const GetNFTsId = ({ address }) => {
         <tbody>
           <tr className="border-b">
             <th className="text-center p-2">NFT</th>
-            <th className="text-center p-2"> Token ID</th>
-            <th className="text-center p-2"> Date</th>
+            <th className="text-center p-2">Token ID</th>
+            <th className="text-center p-2">Date</th>
           </tr>
+          {/* {data?.ownedNfts.map((nft) => (
+            <tr>
+              <td>
+                {
+                  <img
+                    src={nft?.media[0].gateway}
+                    alt="nft face"
+                    width="45px"
+                    height="45px"
+                    className="shadow-lg hover:shadow-zinc-500"
+                  />
+                }
+              </td>
+            </tr>
+          ))} */}
+
           <>
             {data?.ownedNfts.map((id) => {
-              return <GetNFTmetadata address={address} tokenId={id.tokenId} />;
+              return (
+                <GetNFTmetadata
+                  address={address}
+                  tokenId={id.tokenId}
+                  ContractAddressOfNft={ContractAddressOfNft}
+                />
+              );
             })}
           </>
         </tbody>
       </table>
-      {/* {data?.ownedNfts.map((id) => {
-        return (
-          <div className="m-3">
-            <div className="flex gap-1 justify-around">
-              <GetNFTmetadata address={address} tokenId={id.tokenId} />
-            </div>
-          </div>
-        );
-      })} */}
     </td>
   );
 };

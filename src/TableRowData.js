@@ -1,6 +1,6 @@
 import React from "react";
 import GetNFTsId from "./GetNFTsId";
-const TableRowData = ({ address, count, index, key }) => {
+const TableRowData = ({ address, count, index, key, ContractAddressOfNft }) => {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -23,7 +23,10 @@ const TableRowData = ({ address, count, index, key }) => {
       </tr>
       {open && (
         <tr key={key}>
-          <GetNFTsId address={address} />
+          <GetNFTsId
+            address={address}
+            ContractAddressOfNft={ContractAddressOfNft}
+          />
         </tr>
       )}
     </>

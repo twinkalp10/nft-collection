@@ -3,9 +3,17 @@ import "./App.css";
 import TableRowData from "./TableRowData";
 import useNfWallet from "./useNftWalletAddress";
 import usePagination from "./usePagination";
+import { addressOfBAYC } from "./alchemy";
 
 function App() {
-  const { data, error, loading } = useNfWallet();
+  const {
+    data,
+    error,
+    loading,
+    ContractAddressOfNft,
+    callBAYC,
+    callCryptoPunks,
+  } = useNfWallet();
   const { next, page, previous } = usePagination(data.length);
   const [value, setValue] = useState(15);
 
@@ -18,11 +26,16 @@ function App() {
   if (error) {
     return <p>{JSON.stringify(error)}</p>;
   }
+
   return (
     <div className="App">
       <h4 className="flex justify-center items-center pt-2">
-        Owner's list of BAYC NFT
+        Owner's list of BAYC and CryptoPunks NFT
       </h4>
+      <div className="flex justify-center items-center gap-20 p-10">
+        <button onClick={callBAYC}>BAYC</button>
+        <button onClick={callCryptoPunks}>CryptoPunks</button>
+      </div>
       <div className="flex justify-center items-center px-10">
         <div className="mt-8 flex flex-col">
           <div className="-my-2 -mx-4 sm:-mx-6 lg:-mx-8">
@@ -47,7 +60,10 @@ function App() {
                         scope="col"
                         className="py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-6"
                       >
-                        Total BAYC
+                        Total{" "}
+                        {ContractAddressOfNft === addressOfBAYC
+                          ? "BAYC"
+                          : "CryptoPunks"}
                       </th>
                     </tr>
                   </thead>
@@ -60,6 +76,7 @@ function App() {
                           count={wallet.count}
                           key={wallet.address}
                           index={index + page * value - value}
+                          ContractAddressOfNft={ContractAddressOfNft}
                         />
                       ))}
                   </tbody>

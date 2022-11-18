@@ -20,7 +20,9 @@ const useGetNftList = ({ userWalletAddress, ContractAddressOfNft }) => {
 
   const getWalletNfts = async () => {
     try {
-      const dataExist = localStorage.getItem(userWalletAddress);
+      const dataExist = localStorage.getItem(
+        `${userWalletAddress}${ContractAddressOfNft}`
+      );
       if (dataExist) {
         setNftList(JSON.parse(dataExist));
         setLoading(false);
@@ -52,7 +54,10 @@ const useGetNftList = ({ userWalletAddress, ContractAddressOfNft }) => {
           }
         })
       );
-      localStorage.setItem(userWalletAddress, JSON.stringify(list));
+      localStorage.setItem(
+        `${userWalletAddress}${ContractAddressOfNft}`,
+        JSON.stringify(list)
+      );
       setNftList(list);
       setLoading(false);
     } catch (error) {

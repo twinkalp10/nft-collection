@@ -34,6 +34,8 @@ const GetNFTmetadata = ({ address, ContractAddressOfNft }) => {
       </div>
     );
   }
+
+  console.log(nftList);
   if (error) {
     return (
       <div colSpan={3} className="flex justify-center items-center w-full p-4">
@@ -51,12 +53,14 @@ const GetNFTmetadata = ({ address, ContractAddressOfNft }) => {
         </tr>
       </thead>
       <tbody>
-        {nftList.map((nft) => {
-          if (!nft.success) {
+        {nftList?.ownedNfts.map((nft) => {
+          {
+            /* if (!nft.success) {
             return null;
+          } */
           }
           return (
-            <tr className="border-b hover:bg-slate-200" key={nft.data.token_id}>
+            <tr className="border-b hover:bg-slate-200" key={nft.tokenId}>
               <td className="text-center flex justify-center items-center p-1">
                 <a
                   href={nft.data?.permalink}
@@ -65,7 +69,7 @@ const GetNFTmetadata = ({ address, ContractAddressOfNft }) => {
                   rel="noreferrer"
                 >
                   <img
-                    src={nft.data?.image_thumbnail_url}
+                    src={nft.media[0].gateway}
                     alt="nft face"
                     width="45px"
                     height="45px"
@@ -73,9 +77,9 @@ const GetNFTmetadata = ({ address, ContractAddressOfNft }) => {
                   />
                 </a>
               </td>
-              <td className="text-center p-1">{nft.data.token_id}</td>
+              <td className="text-center p-1">{nft.tokenId}</td>
               <td className="text-center p-1">
-                {dayjs(nft.data?.ownership.created_date).format("DD/MM/YYYY")}
+                {dayjs(nft.timeLastUpdated).format("DD/MM/YYYY")}
               </td>
             </tr>
           );

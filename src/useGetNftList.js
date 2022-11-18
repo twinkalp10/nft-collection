@@ -1,17 +1,17 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { alchemy } from "./alchemy";
-const getOptions = ({ address, ContractAddressOfNft, tokenId }) => {
-  const options = {
-    method: "GET",
-    url: `https://api.opensea.io/api/v1/asset/${ContractAddressOfNft}/${tokenId}/`,
-    params: {
-      account_address: `${address}`,
-      include_orders: "false",
-    },
-  };
-  return options;
-};
+// const getOptions = ({ address, ContractAddressOfNft, tokenId }) => {
+//   const options = {
+//     method: "GET",
+//     url: `https://api.opensea.io/api/v1/asset/${ContractAddressOfNft}/${tokenId}/`,
+//     params: {
+//       account_address: `${address}`,
+//       include_orders: "false",
+//     },
+//   };
+//   return options;
+// };
 
 const useGetNftList = ({ userWalletAddress, ContractAddressOfNft }) => {
   const [nftList, setNftList] = useState([]);
@@ -36,29 +36,29 @@ const useGetNftList = ({ userWalletAddress, ContractAddressOfNft }) => {
         { withMetadata: true }
       );
       const { ownedNfts } = nfts;
-
-      const list = await Promise.all(
-        ownedNfts.map(async (token, i) => {
-          try {
-            const { data } = await axios.request(
-              getOptions({
-                address: userWalletAddress,
-                ContractAddressOfNft: ContractAddressOfNft,
-                tokenId: token.tokenId,
-              })
-            );
-            return { data, success: true };
-          } catch (error) {
-            setError(error);
-            return { error, success: false };
-          }
-        })
-      );
+      console.log(nfts);
+      // const list = await Promise.all(
+      //   ownedNfts.map(async (token, i) => {
+      //     try {
+      //       const { data } = await axios.request(
+      //         getOptions({
+      //           address: userWalletAddress,
+      //           ContractAddressOfNft: ContractAddressOfNft,
+      //           tokenId: token.tokenId,
+      //         })
+      //       );
+      //       return { data, success: true };
+      //     } catch (error) {
+      //       setError(error);
+      //       return { error, success: false };
+      //     }
+      //   })
+      // );
       localStorage.setItem(
         `${userWalletAddress}${ContractAddressOfNft}`,
-        JSON.stringify(list)
+        JSON.stringify(nfts)
       );
-      setNftList(list);
+      setNftList(nfts);
       setLoading(false);
     } catch (error) {
       setLoading(false);
